@@ -1,0 +1,61 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+struct node{
+    int data;
+    node* right;
+    node* left;
+};
+node* newNode(int key)
+{
+    node *temp= new node;
+    temp->data=key;
+    temp->left=NULL;
+    temp->right=NULL;
+    return temp;
+}
+int search(int in[],int key,int start,int end)
+{
+    for(int i=start;i<=end;i++)
+    {
+        if(in[i]==key)
+        return i;
+    }
+}
+node* binarytree(int in[],int pre[],int start,int end)
+{
+    if(start>end)
+    return NULL;
+    static int pre_index=0;
+    node* temp=newNode(pre[pre_index]);
+    pre_index++;
+    
+    if(start==end)
+    return temp;
+    
+    int in_index=search(in,temp->data,start,end);
+
+    
+    temp->left=binarytree(in,pre,start,in_index-1);
+    temp->right=binarytree(in,pre,in_index+1,end);
+    
+    return temp;
+    
+}
+void print_postorder(node* temp)
+{
+    if(temp==NULL)
+    return ;
+    print_postorder(temp->left);
+    print_postorder(temp->right);
+    cout<<temp->data<<" ";
+}
+int main()
+{
+    int in[]={4,2,5,1,3,6};
+    int pre[]={1,2,4,5,3,6};
+    int l=sizeof(in)/sizeof(in[0]);
+    node *root =binarytree(in,pre,0,l-1);
+    print_postorder(root);
+    return 0;
+}

@@ -1,0 +1,58 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define pp pair<ll,ll>
+#define ld long double
+map<int,int>visited;
+map<int,vector<int>>g;
+map<int,int>recstack;
+void edge(int a, int b)
+{
+    g[a].push_back(b);
+    return;
+}
+int iscycle(int u)
+{
+    if(!visited[u])
+    {
+        visited[u]=1;
+        recstack[u]=1;
+        
+        for(auto i=g[u].begin();i!=g[u].end();i++)
+        {
+            if(!visited[*i] and iscycle(*i))
+            return 1;
+            if(recstack[*i]) return 1;
+        }
+    }
+recstack[u]=0;
+return 0;
+}
+    
+    
+    
+    
+    
+
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);   
+    
+    int n,e;
+    cin>>n>>e;
+
+	for(int i=0;i<e;i++) 
+	{
+	    int a,b;cin>>a>>b;
+	    edge(a,b);
+	}
+	
+	
+	//for(int i=0;i<n;i++)
+    //if(!visited[i])
+    cout<<iscycle(2);
+	
+	return 0;
+}

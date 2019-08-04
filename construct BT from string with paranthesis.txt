@@ -1,0 +1,67 @@
+#include<bits/stdc++.h>
+using namespace std;
+struct node{
+    int data;
+    node* left;
+    node* right;
+};
+node* newnode(int key)
+{
+    node* temp=new node;
+    temp->data=key;
+    temp->left =temp->right=NULL;
+    return temp;
+}
+int find_index(string str,int start,int end)
+{   if(start>end) return -1;
+    stack <char> s;
+    
+    for(int i=start;i<=end;i++)
+    {
+        if(str[i]=='(')
+        s.push(str[i]);
+        
+        if(str[i]==')')
+        {
+            if(s.top()=='(')
+            s.pop();
+        }
+        if(s.empty())
+        return i;
+    }
+    return -1;
+    
+}
+node* treeFromString(string str,int start,int end)
+{
+    if(start>end)
+    return NULL;
+    
+    node* root=newnode(str[start]-'0');
+    int index=-1;
+    
+    if(str[start+1]=='(' and start+1<=end)
+    index=find_index(str,start+1,end);
+    
+    if(index!=-1)
+    {
+    root->left=treeFromString(str,start+2,index-1);
+    root->right=treeFromString(str,index+2,end-1);
+    }
+    return root;
+    
+}
+void preOrder(node* node)
+{
+    if (node == NULL)
+        return;
+    printf("%d ", node->data);
+    preOrder(node->left);
+    preOrder(node->right);
+}
+int main()
+{
+    string str = "4(2(3)(1))(6(5))";
+    node* root = treeFromString(str, 0, str.length() - 1);
+    preOrder(root);
+}

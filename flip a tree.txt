@@ -1,0 +1,65 @@
+#include<bits/stdc++.h>
+using namespace std;
+struct node{
+    int data;
+    node* left;
+    node* right;
+};
+node* newNode(int key)
+{
+    node* temp=new node;
+    temp->data=key;
+    temp->left =temp->right=NULL;
+    return temp;
+}
+node* flipBinaryTree(node* root)
+{
+    if(root==NULL)
+    return root;
+    if (root->left == NULL && root->right == NULL)
+        return root;
+ 
+    
+    node* flippedRoot = flipBinaryTree(root->left);
+ 
+    
+    root->left->left = root->right;
+    root->left->right = root;
+    root->left = root->right = NULL;
+ 
+    return flippedRoot;
+    
+}
+void printLevelOrder(node* root)
+{
+    queue<node*> q;
+    if(root==NULL)
+    return;
+    q.push(root);
+    while(!q.empty()){
+    if(q.front()->left)  q.push(q.front()->left);
+    if(q.front()->right) q.push(q.front()->right);
+    cout<<q.front()->data<<" ";
+    q.pop();
+}}
+
+   int main()
+{
+    node* root = newNode(1);
+    root->left = newNode(2);
+    root->right = newNode(3);
+    root->right->left = newNode(4);
+    root->right->right = newNode(5);
+ 
+    cout << "Level order traversal of given tree\n";
+    printLevelOrder(root);
+ 
+    root = flipBinaryTree(root);
+ 
+    cout << "\nLevel order traversal of the flipped"
+            " tree\n";
+    printLevelOrder(root);
+    return 0;
+}
+
+

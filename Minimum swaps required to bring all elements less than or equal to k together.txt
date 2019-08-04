@@ -1,0 +1,45 @@
+#include <iostream>
+using namespace std;
+void printArray(int arr[], int n)
+{
+    for (int i = 0; i < n; i++)
+        cout<<arr[i]<<" ";
+}
+void bad_count(int arr[],int start, int count , int k, int n ,int *m)
+{   
+    if(start+count<=n) 
+    {
+        int bad=0;
+        for(int i=start;i<(start+count);i++)
+        {
+        if(arr[i]>k)
+        bad++;
+        }
+        if(bad < *m) 
+        *m= bad;
+        bad_count(arr,start+1,count,k,n,m);
+    }
+}
+
+void rearrange(int arr[],int n,int k)
+{   int count=0;
+   for(int i=0;i<n;i++)
+   {
+       if(arr[i]<=k) count++;
+   }
+    int m=n;
+    bad_count(arr,0,count,k,n,&m);
+    cout<<m;
+}
+
+int main()
+{
+    int arr[] = {2, 1, 5, 6, 3}, k = 3;
+    int n=5;
+    rearrange(arr, n,k);
+    //printArray(arr, n);
+    cout<<endl;
+    
+return 0;
+}
+

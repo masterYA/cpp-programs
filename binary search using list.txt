@@ -1,0 +1,41 @@
+#include <bits/stdc++.h>
+#include<iostream>
+#include<list>
+using namespace std;
+int binsearch(list <int> k, int f, int i, int j)
+{
+    list<int> :: iterator it;
+    int mid, min=i, max=j;
+    mid=(min + max)/2;
+    it = k.begin();
+    for(int d=0;d<mid;d++) it++;
+    if(max>min)
+    { 
+        if(*it ==f)
+        return mid;
+        if(*it>f)
+        return binsearch(k,f,i,mid-1);
+        if(*it<f)
+        return binsearch(k,f,mid+1,j);
+    }
+    else return 1000;
+}
+int main()
+{
+    list <int> k;
+    int n,p,f;
+    cout<<"enter the size of array:  ";
+    cin>>n;
+    cout<<endl;
+    cout<<"enter different elements of array in ascending manner: ";
+    for(int i=0; i<n; i++)
+    {  
+        cin>>p;
+        k.push_back(p);
+    }
+    cout<<endl<<"find the element whose index is to be find: ";
+    cin>>f;
+    cout<<endl<<"the element is at index: " <<binsearch(k,f,0,n-1);
+    return 0;
+    
+}

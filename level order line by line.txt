@@ -1,0 +1,23 @@
+void printLevelOrder(node* root)
+{
+    queue<node*> q;
+    if(root==NULL)
+    return;
+    q.push(root);
+    while(1)
+    {   int nodecount=q.size();
+        if(nodecount==0)
+        return;
+        while(nodecount>0)
+        {
+            if(q.front()->left) q.push(q.front()->left);
+            if(q.front()->right) q.push(q.front()->right);            
+        
+            cout<<q.front()->data;
+            q.pop();
+            nodecount--;
+            
+        }cout<<endl;
+    }
+    
+}

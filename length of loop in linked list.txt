@@ -1,0 +1,59 @@
+#include <iostream>
+using namespace std;
+
+
+	struct Node
+	{
+	    int data;
+	    Node* next;
+	};
+	void push(Node** head,int data)
+	{
+	    Node* temp= new Node;
+	    temp->data=data;
+	    temp->next=*head;
+	    *head=temp;
+	    return ;
+	}
+	int detectloop(Node* head)
+	{
+	    Node* slow=head,*fast=head;
+	    while(slow and fast and fast->next)
+	    {
+	        slow=slow->next;
+	        fast=fast->next->next;
+	        if(slow==fast) break;
+	        
+	    }
+	    if(slow!=fast) cout<<"NO LOOP";
+	    int count=1;
+	    slow=slow->next;
+	    while(slow!=fast)
+	    {
+	        count++;
+	        slow=slow->next;
+	    }
+	    cout<<count;
+	    
+	    
+	    
+	    return 0;
+	}
+	int main()
+	{
+	    Node* head=NULL;
+	    push(&head,5);
+	    push(&head,4);
+	    push(&head,3);
+	    push(&head,2);
+	    push(&head,1);
+	    
+	    head->next->next->next->next->next=head->next;
+	    detectloop(head);
+	    
+	    return 0;
+	}
+	
+	
+	
+

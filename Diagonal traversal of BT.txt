@@ -1,0 +1,55 @@
+#include<bits/stdc++.h>
+using namespace std;
+ struct node{
+     int data;
+     node* left;
+     node* right;
+ };
+ map<int ,node*> arr;
+ node* newNode(int key)
+ {
+     node* temp= new node;
+     temp->data=key;
+     temp->left=NULL;
+     temp->right=NULL;
+     return temp;
+ }
+ void diagonal(node* temp,map<int,vector<int>> &dia,int d)
+ {      if(temp==NULL)
+        return;
+     dia[d].push_back(temp->data);
+     
+     diagonal(temp->left,dia,d+1);
+     diagonal(temp->right,dia,d);
+     
+     
+ }
+ void diagonalPrint(node* root)
+ {    if(!root)
+     return;
+     map<int,vector <int>> dia;
+     diagonal(root,dia,0);
+     
+     for (auto it=dia.begin();it!=dia.end();++it)
+     {
+         for(auto itr=it->second.begin();itr!=it->second.end();++itr)
+         cout<<*itr<<" ";
+         cout<<endl;
+     }
+     
+ }
+ int main()
+ {
+      node* root = newNode(8);
+    root->left = newNode(3);
+    root->right = newNode(10);
+    root->left->left = newNode(1);
+    root->left->right = newNode(6);
+    root->right->right = newNode(14);
+    root->right->right->left = newNode(13);
+    root->left->right->left = newNode(4);
+    root->left->right->right = newNode(7);
+    diagonalPrint(root);
+ 
+    return 0;
+ }

@@ -1,0 +1,54 @@
+#include<bits/stdc++.h>
+using namespace std;
+ struct node{
+     char data;
+     node* left;
+     node* right;
+ };
+ 
+ node* newNode(int key)
+ {
+     node* temp= new node;
+     temp->data=key;
+     temp->left=NULL;
+     temp->right=NULL;
+     return temp;
+ }
+ int index(char in[],char key,int start,int end)
+ {
+     for(int i=start;i<=end;i++)
+     {
+         if(in[i]==key)
+         return i;
+     }
+ }
+node* construct(char in[],char pre[],int start,int end)
+{       static int i=0;
+    if(start > end)
+     return NULL;
+     node *t= newNode(pre[i]);i++;
+     if(start==end)
+     return t;
+
+        int index_in= index(in,t->data,start,end);
+        
+        t->left=construct(in,pre,start,index_in-1);
+        t->right=construct(in,pre,index_in+1,end);
+        return t;
+}
+void print_inorder(node* temp)
+{
+    if(temp==NULL)
+    return;
+    print_inorder(temp->left);
+    cout<<temp->data<<" ";
+    print_inorder(temp->right);
+}
+ int main()
+ {
+      char in[] = {'D', 'B', 'E', 'A', 'F', 'C'};
+  char pre[] = {'A', 'B', 'D', 'E', 'C', 'F'};
+      node* root=construct(in,pre,0,5);
+      print_inorder(root);
+    return 0;
+ }

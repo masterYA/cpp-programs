@@ -1,0 +1,73 @@
+#include<bits/stdc++.h>
+using namespace std;
+ struct node{
+     int data;
+     node* left;
+     node* right;
+ };
+ 
+ node* newNode(int key)
+ {
+     node* temp= new node;
+     temp->data=key;
+     temp->left=NULL;
+     temp->right=NULL;
+     return temp;
+ }
+ void leftprint(node* temp)
+ {
+     if(temp)
+     {
+         if(temp->left || temp->right)
+         {
+            cout<<temp->data<<" ";
+         leftprint(temp->left);
+        }
+        
+     }
+ }
+void rightprint(node* temp)
+ {
+      if(temp)
+{
+     if(temp->right || temp->left)
+     {
+     rightprint(temp->right);
+        cout<<temp->data<<" ";
+     }
+     
+}
+}
+void leafprint(node* temp)
+ { if(temp==NULL)
+ return;
+ 
+     leafprint(temp->left);
+     if(temp->left==NULL and temp->right==NULL )
+     cout<<temp->data<<" ";
+     leafprint(temp->right);
+ 
+ }
+ void boundaryPrint(node* root)
+ {
+     if(!root)
+     return;
+     leftprint(root);
+     leafprint(root);
+     rightprint(root);
+ }
+ int main()
+ {
+      node* root = newNode(8);
+    root->left = newNode(3);
+    root->right = newNode(10);
+    root->left->left = newNode(1);
+    root->right->left = newNode(6);
+    root->right->right = newNode(14);
+    root->right->right->left = newNode(13);
+    root->right->left->left = newNode(4);
+    root->right->left->right = newNode(7);
+    boundaryPrint(root);
+ 
+    return 0;
+ }

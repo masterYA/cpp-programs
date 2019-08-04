@@ -1,0 +1,56 @@
+#include<bits/stdc++.h>
+using namespace std;
+struct node
+{
+    int data;
+    struct node *left;
+    struct node *right;
+};
+ 
+struct node *newNode(int k)
+{
+    struct node *temp = new node;
+    temp->data = k;
+    temp->right = temp->left = NULL;
+    return temp;
+}
+int count_nodes(node* root)
+{
+    if(root==NULL)
+    return 0;
+    return (1+count_nodes(root->left) +count_nodes(root->right));
+}
+bool iscompleteUtil(node* root,int count , int index)
+{
+    if(root==NULL) return true;
+    if(index>count) return false;
+    return (iscompleteUtil(root->left,count,2*index+1) and iscompleteUtil(root->right,count,2*index+2));
+}
+bool iscompleteTree(node* root)
+{
+    int count=count_nodes(root);
+    int index=0;
+    if(iscompleteUtil(root,count,index)) return true;
+    return false;
+}
+int main()
+{
+    struct node* root = NULL;
+    root = newNode(10);
+    root->left = newNode(9);
+    root->right = newNode(8);
+    root->left->left = newNode(7);
+    root->left->right = newNode(6);
+    root->right->left = newNode(5);
+    root->right->right = newNode(4);
+    root->left->left->left = newNode(3);
+    root->left->left->right = newNode(2);
+    root->left->right->left = newNode(1);
+ 
+    if (iscompleteTree(root))
+        printf("yes\n");
+    else
+        printf("no\n");
+ 
+    return 0;
+}

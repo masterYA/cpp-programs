@@ -1,0 +1,44 @@
+#include<bits/stdc++.h>
+using namespace std;
+ struct node{
+     int data;
+     node* left;
+     node* right;
+ };
+node* newNode(int data)
+{
+     node* temp = new node;
+   temp->data = data;
+    temp->left = NULL;
+    temp->right = NULL;
+ 
+    return(temp);
+}
+node* sortedArrayToBST(int arr[],int start,int end)
+{   if(start>end) return NULL;
+    int middle=(start+end)/2;
+    node* root=newNode(arr[middle]);
+    root->left=sortedArrayToBST(arr,start,middle-1);
+    root->right=sortedArrayToBST(arr,middle+1,end);
+    return root;
+}
+void preOrder(struct node* root)
+{
+    if (root == NULL)
+        return;
+    printf("%d ", root->data);
+    preOrder(root->left);
+    preOrder(root->right);
+}
+int main()
+{
+    int arr[] = {1, 2, 3, 4, 5, 6, 7};
+    int n = sizeof(arr)/sizeof(arr[0]);
+ 
+    /* Convert List to BST */
+    struct node *root = sortedArrayToBST(arr, 0, n-1);
+    printf("n PreOrder Traversal of constructed BST ");
+    preOrder(root);
+ 
+    return 0;
+}

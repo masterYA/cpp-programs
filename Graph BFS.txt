@@ -1,0 +1,57 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define pp pair<ll,ll>
+#define ld long double
+map<int,int>visited;
+map<int,vector<int>>g;
+void edge(int a, int b)
+{
+    g[a].push_back(b);
+    return;
+}
+void bfs(int u)
+{
+    queue<int>q;
+    
+    visited[u]=1;
+    q.push(u);
+    while(!q.empty())
+    {
+        int f=q.front();
+        q.pop();
+        
+        for(auto it=g[f].begin();it!=g[f].end();it++)
+        {
+            if(!visited[*it]) 
+            {
+                q.push(*it);
+                visited[*it]=1;   
+            }
+        }
+        
+        cout<<f<<"  ";
+    }
+    return ;
+}
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);   
+    
+    int n,e;
+    cin>>n>>e;
+
+	for(int i=0;i<e;i++) 
+	{
+	    int a,b;cin>>a>>b;
+	    edge(a,b);
+	}
+	
+	
+	for(int i=0;i<n;i++)
+    if(!visited[i])	bfs(i);
+	
+	return 0;
+}

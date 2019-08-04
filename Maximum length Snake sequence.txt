@@ -1,0 +1,33 @@
+#include <bits/stdc++.h>
+using namespace std;
+void findSnakeSequence(int mat[][4])
+{   
+    int T[4][4]={{}},r=0,d=0;
+    for(int j=3;j>=0;j--)
+    {
+      for(int i=3;i>=0;i--)
+      {  r=0;d=0;
+        if((j!=3) and (abs(mat[i][j]-mat[i][j+1])==1)) r=T[i][j+1]+1;
+        if((i!=3) and(abs(mat[i][j]-mat[i+1][j])==1)) d=T[i+1][j]+1;
+    
+        T[i][j]=max(r,d);  
+    
+      }
+    }
+    cout<<T[0][0];
+}    
+int main()
+{
+    int mat[4][4] =
+    {
+        {9, 6, 5, 2},
+        {8, 7, 6, 5},
+        {7, 3, 1, 6},
+        {1, 1, 1, 7},
+    };
+ 
+    findSnakeSequence(mat);
+ 
+    return 0;
+
+}

@@ -1,0 +1,59 @@
+#include<bits/stdc++.h>
+using namespace std;
+struct node{
+    int data;
+    node* left;
+    node* right;
+};
+node* newNode(int key)
+{
+    node* temp=new node;
+    temp->data=key;
+    temp->left =temp->right=NULL;
+    return temp;
+}
+node* mirror(node* root)
+{
+    node* left=root->left;
+    node* right=root->right;
+    root->left=right;
+    root->right=left;
+    if(root->left) mirror(root->left);
+    if(root->right) mirror(root->right);
+    return root;
+}
+void inOrder(struct node* temp) 
+{
+  if (temp == NULL) 
+    return;
+   
+  inOrder(temp->left);
+  printf("%d ", temp->data);
+  inOrder(temp->right);
+}  
+ 
+ 
+/* Driver program to test mirror() */
+int main()
+{
+  struct node *root = newNode(1);
+  root->left        = newNode(2);
+  root->right       = newNode(3);
+  root->left->left  = newNode(4);
+  root->left->right = newNode(5); 
+   
+  /* Print inorder traversal of the input tree */
+  printf("Inorder traversal of the constructed"
+           " tree is \n");
+  inOrder(root);
+   
+  /* Convert tree to its mirror */
+  node* new_root=mirror(root); 
+   
+  /* Print inorder traversal of the mirror tree */
+  printf("\nInorder traversal of the mirror tree"
+         " is \n");  
+  inOrder(new_root);
+   
+  return 0;  
+}

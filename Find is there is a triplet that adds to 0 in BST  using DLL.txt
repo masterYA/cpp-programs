@@ -1,0 +1,89 @@
+#include<bits/stdc++.h>
+using namespace std;
+struct node
+{
+    int data;
+    node* right;
+     node* left;
+};
+node* newNode(int key)
+{
+    node* temp = new node;
+    temp->data=key;
+    temp->left=temp->right=NULL;
+    return temp;
+}
+
+ node* insert(node* root, int data)
+{
+    if (root == NULL)
+        return newNode(data);
+    if (data < root->data)
+        root->left = insert(root->left, data);
+    else if (data > root->data)
+        root->right = insert(root->right, data);
+    return root;
+}
+
+void BST2DLL (node* root, node** head)
+{
+    if(root==NULL) return;
+    static node* prev= NULL;
+    
+    BST2DLL(root->left,head);
+    
+    if(prev==NULL) *head=root;
+    else
+    {
+        root->left=prev;
+        prev->right=root;
+    }
+    prev=root;
+    
+    BST2DLL(root->right,head);
+}
+bool ispresent(node* head,int sum)
+{node* tail=head;
+while(tail->right!=NULL)
+tail=tail->right;
+    while(head->right!=NULL)
+    {
+        int curr=head->data+tail->data;
+        if(curr==sum)
+        return true;
+        else if(curr>sum)
+        tail=tail->left;
+        else head=head->right;
+    }
+    return false;
+}
+bool isTripletPresent(node* root)
+{
+    if(root==NULL) return false;
+    node* head=NULL;
+    BST2DLL(root,&head);
+    
+    while(head->right!=NULL and head->data<0)
+    {
+        if(ispresent(head->right,-1*head->data))
+        return true;
+        else head=head->right;
+    }
+    return false;
+}
+int main()
+{
+    node* root = NULL;
+    root = insert(root, 6);
+    root = insert(root, -13);
+    root = insert(root, 14);
+    root = insert(root, -8);
+    root = insert(root, 15);
+    root = insert(root, 13);
+    root = insert(root, 7);
+    if (isTripletPresent(root))
+        printf("Present");
+    else
+        printf("Not Present");
+    return 0;
+}

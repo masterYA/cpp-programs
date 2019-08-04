@@ -1,0 +1,70 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define ld long double
+#define pii pair<int,int>
+map<int,vector<pii>>g;
+vector<int>path;
+int n;
+void add(int a,int b,int w)
+{
+    g[a].push_back({b,w});
+    g[b].push_back({a,w});
+}
+int pathMoreThanK(int src,int k)
+{
+    
+    path[src]=1;
+    
+    if(k<0) return 1;
+    
+    for(auto it=g[src].begin();it!=g[src].end();it++)
+    {
+        int v=(*it).first;
+        int w=(*it).second;
+        
+        if(path[v]==1) continue;
+        if(w>k) return 1;
+        path[v]=1;
+        
+        if(pathMoreThanK(v,k-w)) return 1;
+        
+        //backtrack
+        path[v]=0;
+    }
+    
+    return 0;
+    
+    
+    
+}
+void solve()
+{
+   int e;
+   cin>>n>>e;
+   for(int i=0;i<e;i++)
+   {
+       int a,b,w;
+       cin>>a>>b>>w;
+       add(a,b,w);
+     
+   }
+   path.assign(n,0);
+   int src=0,k=62;
+   
+   cout<<pathMoreThanK(src,k) ;
+   
+   
+}
+int main()
+{
+    cin.tie(0);
+    cout.tie(0);
+    ios::sync_with_stdio(0);
+    cout<<setprecision(12);
+    int t=1;
+   // cin>>t;
+    while(t--) solve();
+   
+return 0;
+}

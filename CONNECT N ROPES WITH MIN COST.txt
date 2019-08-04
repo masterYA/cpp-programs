@@ -1,0 +1,39 @@
+#include<bits/stdc++.h>
+using namespace std;
+void heapify(int arr[],int n, int i)
+{
+    int smallest=i;
+    int l=2*i+1;
+    int r=2*i+2;
+    if(l<n and arr[l]<arr[i])
+    smallest=l;
+    if(r<n and arr[r]<arr[i])
+    smallest=r;
+    if(smallest!=i)
+    {swap(arr[i],arr[smallest]);
+    heapify(arr,n,smallest);}
+}
+int main()
+{
+    int arr[] = {4, 3, 6, 2};
+    int n = sizeof(arr)/sizeof(arr[0]);
+    for(int i=(n/2)-1;i>=0;i--)
+   heapify(arr,n,i);int c=0;
+   for(int j=0;j<n-1;j++)
+   {
+   int a=arr[0];
+   swap(arr[n-j-1],arr[0]);
+  
+  
+   heapify(arr,n-j-1,0);
+   
+   
+   int b= arr[0];
+   arr[0]=a+b;
+   c=c+arr[0];
+   heapify(arr,n-j-1,0);
+
+   }
+   cout<<c;
+    return 0;
+}

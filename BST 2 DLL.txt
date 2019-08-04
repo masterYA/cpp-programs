@@ -1,0 +1,17 @@
+void* BST2DLL (node* root, node* head)
+{
+    if(root==NULL) return;
+    static node* prev= NULL;
+    
+    BST2DLL(root->left,head);
+    
+    if(prev==NULL) head=root;
+    else
+    {
+        root->left=prev;
+        prev->right=root;
+    }
+    prev=root;
+    
+    BST2DLL(root->right,head);
+}

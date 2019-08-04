@@ -1,0 +1,33 @@
+#include <bits/stdc++.h>
+using namespace std;
+void rev(int );
+stack<int> s;
+int main()
+{   int n;
+    cin>>n;
+    int a;
+    for(int i=0;i<n;i++)
+    {   cin>>a;
+        rev(a);
+    }
+    for( int j=0; j<n ; j++)
+   {
+       cout<< s.top()<<" ";
+       s.pop();}
+ return 0;   
+}
+void rev(int a)
+{ 
+    int n,m;
+    if(s.empty())
+    {
+        s.push(a);
+    }
+    else
+    {
+        m=s.top();
+        s.pop();
+        rev(a);
+        s.push(m);
+    }
+}

@@ -1,0 +1,37 @@
+#include <bits/stdc++.h>
+using namespace std;
+void get_bin(unsigned char term1,unsigned char term2)
+{
+    vector<int>v1,v2;int count=0;
+    for(unsigned char i=1<<7;i>0;i=i/2)
+    {if(term1 & i)  v1.push_back(1);
+    else v1.push_back(0);}
+    for(unsigned char i=1<<7;i>0;i=i/2)
+    {if(term2 & i)  v2.push_back(1);
+    else v2.push_back(0);}
+    
+    for(int i=0;i<8;i++)
+    if(v1[i]!=v2[i]) count++;
+    if(count) cout<<1; else cout<<0;
+    return ;
+}
+int main() {
+	unsigned char b = 0 << 7 |
+                  0 << 6 |
+                  1 << 5 |
+                  0 << 4 |
+                  0 << 3 |
+                  0 << 2 |
+                  0 << 1 |
+                  0 << 0;
+    unsigned char c = 0 << 7 |
+                  0 << 6 |
+                  0 << 5 |
+                  0 << 4 |
+                  0 << 3 |
+                  0 << 2 |
+                  1 << 1 |
+                  0 << 0;
+	get_bin(b,c);
+	return 0;
+}

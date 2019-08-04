@@ -1,0 +1,92 @@
+#include<stdio.h>
+#include<limits.h>
+#include<bits/stdc++.h>
+using namespace std;
+/* A tree node structure */
+struct node
+{
+	int data;
+	struct node *left;
+	struct node *right;
+};
+struct node* newNode (int data)
+{
+    struct node *temp = new struct node;
+    temp->data = data;
+    temp->left = NULL;
+    temp->right = NULL;
+    return temp;
+}
+
+bool printPath (struct node *root, 
+				struct node *target_leaf)
+{
+	// base case
+	if (root == NULL)
+		return false;
+
+	// return true if this node is the target_leaf 
+	// or target leaf is present in one of its 
+	// descendants
+	if (root == target_leaf || 
+		printPath(root->left, target_leaf) ||
+		printPath(root->right, target_leaf) )
+	{
+		printf("%d ", root->data);
+		return true;
+	}
+
+	return false;
+}
+
+int sum(vector<int>v)
+{int temp=0;
+    for(int i=0;i<v.size();i++)
+    {
+        temp+=v[i];
+    }return temp;
+}
+vector<int>final;
+void maxSumPath(node* root,vector<int>ans)
+{   
+    if(root==NULL) return ;
+
+    ans.push_back(root->data);
+    if(root->left==NULL and root->right==NULL)
+    {
+        if(sum(ans)>sum(final)) 
+        final=ans;
+    }
+    if(root->left) maxSumPath(root->left,ans);
+    if(root->right) maxSumPath(root->right,ans);
+  
+}
+
+
+int main()
+{
+	struct node *root = NULL;
+
+	
+	root = newNode(10);
+	root->left = newNode(-2);
+	root->right = newNode(7);
+	root->left->left = newNode(8);
+	root->left->right = newNode(-4);
+	vector<int>ans;
+maxSumPath(root,ans);
+	printf ("Following are the nodes on the maximum "
+			"sum path \n");
+			for(int i=0;i<final.size();i++)
+			cout<<final[i]<<" ";
+			cout<<endl;
+	
+	
+	
+	
+
+	printf ("\nSum of the nodes is %d ",sum(final));
+
+	getchar();
+	return 0;
+}

@@ -1,0 +1,59 @@
+#include <bits/stdc++.h>
+using namespace std;
+int matrix[10][10];
+int know(int , int );
+int celeb(int );
+int main()
+{  
+    int n;cin>>n;
+    for(int i=0;i<n;i++)
+    {for(int j=0;j<n;j++)
+    {
+    cin>>matrix[i][j];}}
+    int id=celeb(n);
+    if(id==-1)
+    cout<<"no celeb";
+    else 
+    cout<<"celeb :"<<id;
+    return 0;
+}
+int know(int a, int b)
+{
+    return (matrix[a][b]);
+}
+
+int celeb(int n)
+{stack <int> st;
+    for(int i=0;i<n;i++)
+    st.push(i);
+    int A=st.top();
+    st.pop();
+    int B=st.top();
+    st.pop();
+    while(st.size()>1)
+    {
+        if(know(A,B))
+        {
+            A=st.top();
+            st.pop();
+        }
+        if(know(B,A))
+        {
+            B=st.top();
+            st.top();
+        }
+    }
+    int C= st.top();
+    if(know(C,B))
+        C=B;
+    if(know(C,A))
+        C=A;
+    for(int i=0;i<n;i++)
+    {
+        if((i!=C) and (!know(i,C) || know(C,i)))
+        return -1;
+    }
+    return C;
+        
+    }
+    

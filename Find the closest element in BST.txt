@@ -1,0 +1,63 @@
+
+#include <bits/stdc++.h>
+using namespace std;
+
+struct node {
+	int data;
+	struct node *left, *right;
+};
+
+node* newnode(int data)
+{
+	node* temp = new node;
+	temp->data = data;
+	temp->left = NULL;
+	temp->right = NULL;
+	return temp;
+}
+
+node* insert(node* root, int key)
+{
+	if (root == NULL)
+		return newnode(key);
+	if (key < root->data)
+		root->left = insert(root->left, key);
+	else
+		root->right = insert(root->right, key);
+	return root;
+}
+void minDiff(node* root, int k,int *min,int *value)
+{   
+    if(root==NULL) return;
+    if(root->data==k) {*value=k;return;}
+    if(root->data>k and (root->data-k)<*min)
+    {
+        *min=root->data-k;
+        *value=root->data;
+        minDiff(root->left,k,min,value);
+    }
+    if(root->data<k and (k-root->data)<*min)
+    {
+        *min=k-root->data;
+        *value=root->data;
+        minDiff(root->right,k,min ,value);
+    }
+    return;
+}
+int main()
+{
+    node *root = newnode(9);
+    root->left    = newnode(4);
+    root->right   = newnode(17);
+    root->left->left = newnode(3);
+    root->left->right = newnode(6);
+    root->left->right->left = newnode(5);
+    root->left->right->right = newnode(7);
+    root->right->right = newnode(22);
+    root->right->right->left = newnode(20);
+    int k = 20;
+    int min=100;int value=0;
+    minDiff(root, k,&min,&value);
+    cout<<value;
+    return 0;
+}

@@ -1,0 +1,31 @@
+#include <bits/stdc++.h>
+using namespace std;
+int knapsack(int wt[],int val[],int capa, int n)
+{
+    int tab[n+1][capa+1];
+
+    for(int i=0;i<=n;i++){
+    for(int j=0;j<=capa;j++){
+        if(i==0 || j==0) tab[i][j]=0;
+        
+        else if(wt[i-1]>j)
+        tab[i][j]=max(tab[i-1][j],tab[i][j-1]);
+        
+        else 
+        tab[i][j]= max(tab[i-1][j],val[i-1] +  tab[i-1][j-wt[i-1]]);
+        
+    }    
+    }
+    return tab[n][capa];
+    
+}
+
+int main()
+{
+	int val[] = {4, 5, 1};
+    int wt[] = {1, 2, 3};
+    int  W = 4;
+    int n = sizeof(val)/sizeof(val[0]);
+	printf("%d", knapsack(wt, val, W, n));
+	return 0;
+}

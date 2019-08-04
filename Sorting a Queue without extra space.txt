@@ -1,0 +1,52 @@
+#include<bits/stdc++.h>
+using namespace std;
+queue<int> q;
+int findMin( int n)
+{   int i=0,m=10000,j,N=q.size();
+    while(i!=N)
+    {        if(q.front()<m && i<n)
+        {m=q.front();j=i;}
+       q.push(q.front()); q.pop();
+      i++;
+ }
+        return j; 
+}
+
+void afterInsert(int j,int n)
+{   int i=0,small;
+    int b;
+    while(i!=n)
+    {
+        if(i==j)
+        {small=q.front();q.pop();}
+      else  {b=q.front();
+        q.pop();
+        q.push(b);}
+        i++;
+    }
+    q.push(small);
+}
+    
+int main()
+{   
+    int i,j,n,a;
+    cin>>n;
+    for(i=0;i<n;i++)
+    {
+        cin>>a;
+        q.push(a);
+    }
+    for(i=0;i<n;i++)
+    {
+        j=findMin(n-i);
+       afterInsert(j,n);
+    }
+    
+    
+    for(int i=0;i<n;i++)
+    {
+        cout<<q.front()<<" ";
+        q.pop();
+    }
+    return 0;
+}

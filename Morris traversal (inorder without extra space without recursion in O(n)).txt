@@ -1,0 +1,67 @@
+#include<bits/stdc++.h>
+using namespace std;
+struct node
+{
+    int data;
+    node* right;
+     node* left;
+};
+node* newNode(int key)
+{
+    node* temp = new node;
+    temp->data=key;
+    temp->left=temp->right=NULL;
+    return temp;
+}
+node* insert (node* root,int key)
+{
+    if(root==NULL)
+    return newNode(key);
+    if(root->data>key) root->left=insert(root->left,key);
+    if(root->data<key) root->right=insert(root->right,key);
+    return root;
+}
+void MorrisTraversal(node* root)
+{
+    node *pre,*curr;
+    if(root==NULL) return;
+    curr=root;
+    while(curr!=NULL)
+    {
+     if(curr->left==NULL)
+     {
+         cout<<curr->data;
+         curr=curr->right;
+     }
+     else
+     {
+         pre=curr->left;
+         while(pre->right!=NULL and pre->right!=curr)
+         pre=pre->right;
+         
+         if(pre->right== NULL)
+         {
+             pre->right=curr;
+             curr=curr->left;
+         }
+         else
+         {
+             pre->right=NULL;
+             cout<<curr->data;
+             curr=curr->right;
+         }
+     }
+    }
+}
+int main()
+{
+  struct node *root = newNode(1);
+  root->left        = newNode(2);
+  root->right       = newNode(3);
+  root->left->left  = newNode(4);
+  root->left->right = newNode(5); 
+ 
+  MorrisTraversal(root);
+
+  return 0;
+}

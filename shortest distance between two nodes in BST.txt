@@ -1,0 +1,54 @@
+#include<bits/stdc++.h>
+using namespace std;
+struct node
+{
+    int data;
+    node* right;
+     node* left;
+};
+node* newNode(int key)
+{
+    node* temp = new node;
+    temp->data=key;
+    temp->left=temp->right=NULL;
+    return temp;
+}
+node* insert (node* root,int key)
+{
+    if(root==NULL)
+    return newNode(key);
+    if(root->data>key) root->left=insert(root->left,key);
+    if(root->data<key) root->right=insert(root->right,key);
+    return root;
+}
+int count(node* root,int a)
+{int i=0;
+    while(root!=NULL)
+    {
+        if(root->data>a) {root=root->left;i++;}
+        else if(root->data<a) {root=root->right;i++;}
+        else    break;
+    }
+    return i;
+}
+int findDist(node* root, int a,int b)
+{
+    int s1,s2;
+    s1=count(root,a);
+    s2=count(root,b);
+    return s1+s2;
+}
+int main()
+{
+    struct node* root = NULL;
+    root = insert(root, 20);
+    insert(root, 10);
+    insert(root, 5);
+    insert(root, 15);
+    insert(root, 30);
+    insert(root, 25);
+    insert(root, 35);
+    int a = 5, b = 55;
+    cout << findDist(root, 10, 35);
+    return 0;
+}

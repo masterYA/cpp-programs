@@ -1,0 +1,79 @@
+#include<bits/stdc++.h>
+using namespace std;
+struct node
+{
+    int data;
+    node* right;
+     node* left;
+};
+node* newNode(int key)
+{
+    node* temp = new node;
+    temp->data=key;
+    temp->left=temp->right=NULL;
+    return temp;
+}
+
+ node* insert(node* root, int data)
+{
+    if (root == NULL)
+        return newNode(data);
+    if (data < root->data)
+        root->left = insert(root->left, data);
+    else if (data > root->data)
+        root->right = insert(root->right, data);
+    return root;
+}
+ 
+
+void inorder(struct node* root)
+{
+    if (root != NULL) {
+        inorder(root->left);
+        cout << root->data << " ";
+        inorder(root->right);
+    }
+}
+
+void ksmallest(node* root, int k, int *sum,int *count)
+{
+    if(root==NULL) return;
+    ksmallest(root->left,k,sum,count);
+   if(*count!=k) 
+   {*sum = *sum+root->data;
+    ++*count;
+   }
+    ksmallest(root->right,k,sum,count);
+}
+int ksmallestElementSum(node* root, int k)
+{
+    int sum=0,count=0;
+    ksmallest(root,k,&sum,&count);
+    return sum;
+}
+
+ 
+int main()
+{
+ 
+    /*    20
+        /    \
+       8     22
+     /   \
+    4     12
+         /   \
+        10    14
+          */
+    node *root = NULL;
+    root = insert(root, 20);
+    root = insert(root, 8);
+    root = insert(root, 4);
+    root = insert(root, 12);
+    root = insert(root, 10);
+    root = insert(root, 14);
+    root = insert(root, 22);
+    
+    int k = 3;
+    cout <<  ksmallestElementSum(root, k) <<endl;
+    return 0;
+}

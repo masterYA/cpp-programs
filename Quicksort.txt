@@ -1,0 +1,34 @@
+#include <iostream>
+using namespace std;
+int Partition(int *,int, int);
+void Quicksort(int* , int , int );
+int main() {
+	int A[]={7,8,5,4,2,1,0,3,6};
+	Quicksort(A,0,7);
+	for(int i=0;i<8;i++)
+	cout<<endl<<A[i];
+	return 0;
+}
+void Quicksort(int* A, int start, int end)
+{
+    if(start<end)
+    {
+        int partition_index=Partition(A, start, end);
+        Quicksort(A,start, partition_index-1);
+        Quicksort(A,partition_index+1,end);
+    }
+}
+int Partition(int *A,int start,int end)
+{
+    int pivot=A[end];
+    int partition_index=start;
+    for(int i=start;i<end;i++)
+    {
+        if(A[i]<=pivot)
+        {
+            swap(A[i],A[partition_index]);
+            partition_index++;
+        }
+    }swap(A[partition_index],A[end]);
+    return partition_index;
+}
